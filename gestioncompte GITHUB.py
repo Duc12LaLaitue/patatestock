@@ -1,9 +1,9 @@
 #-------------------------------------------------------------------------------
 # Name:        compte et stock de patates
 #
-# Author:      Jules
+# Author:      Duc12_La_Laitue
 #
-# Created:     26/11/2021
+# Created:     02/12/2021
 # Copyright:   (c) jules 2021
 #
 #version: 8.0
