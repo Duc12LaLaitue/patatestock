@@ -36,7 +36,9 @@ def start(): #fonction qui demandde à l'utilisateur si il a un compte.
         Mdp = input("Veuillez rentrer votre mot de passe : ") #demander à l'utilisateur son mdp
         cursor.execute('SELECT * FROM compte WHERE mail="'+Mail+'"') #regarder dans la table compte et dans la colonne mail si le mail rentré par l'utilisateur est existant.
         verif = cursor.fetchall() #enregistre ma requête précédente dans une variable
-        if verif != 0: #si la valeur renvoyée par ma requête précédente est autre chose que 0 cela veut dire qu'il y a déjà un mail d'enregistré. Alors,
+
+
+        if len(verif) ==0: #si la valeur renvoyée par ma requête précédente est autre chose que 0 cela veut dire qu'il y a déjà un mail d'enregistré. Alors,
             pas = input("Vous n'avez pas de compte à cette adresse mail. Voulez vous en créer un ? ") #demander à l'utilisateur si il veut un compte.
             if pas == "oui": #si oui alors l'envoyer vers la fonction creation de compte.
                 creationcompte(Mail)
@@ -48,7 +50,7 @@ def start(): #fonction qui demandde à l'utilisateur si il a un compte.
             else: #si non, lui dire au revoir.
                 print("Pas de soucis, nous espérons vous revoir un jour. Bonne journée.")
 
-        else: #ici la valeur qui est stocké dans verif vaut 0 donc il n'y a pas d'adresse mail enregistré.
+        if verif[0][3] == Mail: #ici la valeur qui est stocké dans verif vaut pas 0 donc il y a une adresse mail enregistré.
             connection1(Mail, Mdp) #je revnvoie la personne vers connexion.
             Co = input("Voulez vous commander ? ") #et lui demande après si elle souhaite commander.
             if Co == "oui": #si oui alors je lance la fonction commander.
@@ -160,12 +162,12 @@ def commander0(Mail):
         for tupl in nbreste:
             for i in tupl:
                 liste.append(i)
-
+        print(liste)
         test = float(nombre)
-        ok = liste[0] - test #calculer reste des stocks.
-
-        sql = "UPDATE stock SET nbpatates = %s WHERE idmagasin = %s" #remplacer l'ancien reste des stocks par le nouveau.
-        value = (ok, IDmagasinStock)
+        ok = liste[1] - test #calculer reste des stocks.
+        print(ok)
+        sql = "UPDATE stock SET nbpatates = %s WHERE idmagasin = %s AND sortepatate=%s" #remplacer l'ancien reste des stocks par le nouveau.
+        value = (ok, IDmagasinStock,sorte)
         cursor.execute(sql, value)
 
 def connection1(Mail, Mdp): #gère la connection.
